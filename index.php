@@ -70,7 +70,8 @@ if (isset($_SESSION['id']) && empty($_SESSION['id']) == false) {
                 <div class="modal-body">
                     <form action="adicionar-tarefa.php" method="POST">
                         <!--input para adicionar tarefa-->
-                        <input type="text" class="form-control form-control-lg" name="nome" require />
+                        <input type="text" class="form-control form-control-lg" name="atividades" require />
+                        <input type="hidden" value="<?= $info['id'] ?>">
                         <div class="modal-footer display-flex ml-5">
                             <input type="submit" class="btn btn-primary" value="Adicionar tarefa">
 
