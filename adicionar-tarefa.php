@@ -14,7 +14,4 @@ if ($atividades) {
         header("Location:index.php");
         exit;
     }
-} else {
-    header("Location:adicionar.php");
-    exit;
 }

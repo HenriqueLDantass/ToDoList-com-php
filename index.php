@@ -15,6 +15,12 @@ if (isset($_SESSION['id']) && empty($_SESSION['id']) == false) {
     }
 }
 
+$lista = [];
+$sql = $pdo->query("SELECT * FROM tarefas");
+if ($sql->rowCount() > 0) {
+    $lista = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,10 +74,10 @@ if (isset($_SESSION['id']) && empty($_SESSION['id']) == false) {
                     <h5 class="modal-title" id="exampleModalLabel">Adicione a sua tarefa</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="adicionar-tarefa.php" method="POST">
+                    <form action="adicionar-tarefa.php" method="POST" autocomplete="false">
                         <!--input para adicionar tarefa-->
-                        <input type="text" class="form-control form-control-lg" name="atividades" require />
-                        <input type="hidden" value="<?= $info['id'] ?>">
+                        <input type="text" class="form-control form-control-lg" name="atividades" required autocomplete="false" />
+                        <input type="hidden" value="<?= $info['id'] ?>" name="id">
                         <div class="modal-footer display-flex ml-5">
                             <input type="submit" class="btn btn-primary" value="Adicionar tarefa">
 
@@ -82,6 +88,38 @@ if (isset($_SESSION['id']) && empty($_SESSION['id']) == false) {
             </div>
         </div>
     </div>
+
+    <!-- listando as tarefas -->
+    <table class="table mt-5">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">tarefas</th>
+                <th class="text-center">Feito</th>
+                <th class="text-center">Opções</th>
+            </tr>
+        </thead>
+        <?php
+        if ($sql->rowCount() > 0) {
+            foreach ($lista as $todo) : ?>
+                <tr>
+
+                    <td class="text-center"><?= $todo['atividas'] ?></td>
+                    <td class="text-center"><input type="checkbox" class=""></td>
+                    <td class="text-center">
+                        <a href="editar-todo.php?id=<?= $todo['id'] ?>" class="btn-edit">Editar</a>
+                        <a href="excluir-todo.php?id=<?= $todo['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')" class="btn-delete">Excluir</a>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        <?php
+        } else {
+            echo "<td class='text-center'>Não a tarefas no momento!</td>
+            <td class='text-center'></td>
+            <td class='text-center'>";
+        }
+        ?>
+
+    </table>
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
