@@ -56,13 +56,14 @@ if ($sql->rowCount() > 0) {
 
     <!--adicionar tarefa-->
     <!-- Button trigger modal -->
-    <div class="display-flex">
-        <button type="button" class="btn btn-primary m-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="d-flex">
+        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Adicionar tarefa
         </button>
-        <button type="button" class="btn btn-primary m-3">
-            Excluir todas as tarefas
-        </button>
+        <form action="deletar-tudo.php" method="$_GET">
+            <input type="submit" class="btn btn-primary m-1" value="Excluir todas as tarefas" onclick="return confirm('Tem certeza que deseja excluir?')" class="btn-delete">
+        </form>
+
     </div>
 
 
@@ -71,7 +72,7 @@ if ($sql->rowCount() > 0) {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicione a sua tarefa</h5>
+                    <h5 class="modal-title">Adicione a sua tarefa</h5>
                 </div>
                 <div class="modal-body">
                     <form action="adicionar-tarefa.php" method="POST" autocomplete="false">
@@ -90,7 +91,7 @@ if ($sql->rowCount() > 0) {
     </div>
 
     <!-- listando as tarefas -->
-    <table class="table mt-5">
+    <table class="table mt-1">
         <thead class="table-dark">
             <tr>
                 <th class="text-center">tarefas</th>
@@ -98,7 +99,9 @@ if ($sql->rowCount() > 0) {
                 <th class="text-center">Opções</th>
             </tr>
         </thead>
+        <!-- area tarefas -->
         <?php
+
         if ($sql->rowCount() > 0) {
             foreach ($lista as $todo) : ?>
                 <tr>
